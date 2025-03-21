@@ -1,11 +1,11 @@
-def cont_mem_algos(memory, req, start_index):
-    if not memory:
+def worst_fit(mem_avail, req_size, index):
+    if not mem_avail:
         return None
 
     normalized_memory = []
     index_map = []
 
-    for i, (base, limit_or_size) in enumerate(memory):
+    for i, (base, limit_or_size) in enumerate(mem_avail):
         base, limit_or_size = int(base), int(limit_or_size)
 
         if limit_or_size < base:
@@ -26,11 +26,11 @@ def cont_mem_algos(memory, req, start_index):
     max_size = -1
 
     for i in range(len(normalized_memory)):
-        idx = (start_index + i) % len(normalized_memory)
+        idx = (index + i) % len(normalized_memory)
         base, limit = normalized_memory[idx]
         available = limit - base
 
-        if available >= req and available > max_size:
+        if available >= req_size and available > max_size:
             best_index = idx
             max_size = available
 
@@ -38,7 +38,7 @@ def cont_mem_algos(memory, req, start_index):
         return None
 
     base, limit = normalized_memory[best_index]
-    new_base = base + req
+    new_base = base + req_size
 
     if new_base == limit or limit == 0:
         removed_index = index_map.pop(best_index)
