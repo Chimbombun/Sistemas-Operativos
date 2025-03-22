@@ -31,3 +31,4 @@ def worst_fit(memory, req: int, index: int):
     else:
         memory_blocks[best_fit_index] = (base + req, size - req)
         return memory_blocks, base, req, best_fit_index
+
